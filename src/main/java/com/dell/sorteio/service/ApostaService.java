@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
-@NoArgsConstructor
 @AllArgsConstructor
 public class ApostaService {
     ApostaRepository apostaRepository;
@@ -21,16 +21,20 @@ public class ApostaService {
 
     public void apostar(List<Integer> numeros, Boolean surpresinha, Apostador apostadorEntrada) {
         Apostador apostador= apostadorService.getPorNomeECPF(apostadorEntrada.getNome(), apostadorEntrada.getCpf());
+        if(apostador == null){
+            apostador = apostadorService.cadastraApostador(apostadorEntrada);
+        }
         if(!sorteioService.existeSorteioAberto()){
-            //exception
+            throw new RuntimeException("Não existe sorteio aberto");
         }
         if(numerosInvalidos(numeros)){
-            System.out.println("numerosInvalido");
+            throw new RuntimeException("Numeros invalidos");
         }
         if(surpresinha){
           numeros = geraNumeros();
         }
-        apostaRepository.save(new Aposta(numeros, apostador));
+
+        apostaRepository.criarAposta(apostador.getID(), listToString(numeros));
     }
 
     private boolean numerosInvalidos(List<Integer> entrada) {
@@ -53,5 +57,9 @@ public class ApostaService {
             }
         }
         return numeros;
+    }
+
+    private String listToString(List<Integer> numeros){
+        return numeros.stream().map(String::valueOf).collect(Collectors.joining(","));
     }
 }

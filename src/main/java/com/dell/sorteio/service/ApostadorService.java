@@ -7,15 +7,18 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@NoArgsConstructor
 @AllArgsConstructor
 public class ApostadorService {
     ApostadorRepository repository;
     public Apostador getPorNomeECPF(String nome, String cpf) {
-        Apostador apostador = repository.getPorNomeECPF(nome, cpf);
-        if(apostador==null){
-            //exeption
+        Apostador apostador = repository.getPorCPF(cpf);
+        if(!apostador.getNome().equals(nome)){
+            return null;
         }
         return apostador;
+    }
+
+    public Apostador cadastraApostador(Apostador apostadorEntrada) {
+        return repository.save(apostadorEntrada);
     }
 }

@@ -16,7 +16,7 @@ public interface SorteioRepository extends JpaRepository<Sorteio, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO Sorteio(nome, aberto) values('a', true)", nativeQuery = true)
+    @Query(value = "INSERT INTO Sorteio(nome, aberto) values(':nome', true)", nativeQuery = true)
     public void abreSorteio(@Param("nome") String nome);
 
     @Modifying

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @AllArgsConstructor
@@ -15,12 +16,14 @@ import java.util.List;
 public class Aposta {
     @Id
     Integer ID;
-    List<Integer> valoresApostados;
+    String valoresApostados;
     @ManyToOne
     Apostador apostador;
 
     public Aposta(List<Integer> valoresApostados, Apostador apostador){
-        this.valoresApostados = valoresApostados;
+        this.valoresApostados = valoresApostados.stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(","));
         this.apostador = apostador;
     }
 }
