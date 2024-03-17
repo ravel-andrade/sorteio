@@ -2,6 +2,7 @@ package com.dell.sorteio.service;
 
 import com.dell.sorteio.model.Aposta;
 import com.dell.sorteio.model.Apostador;
+import com.dell.sorteio.model.Sorteio;
 import com.dell.sorteio.repository.ApostaRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -31,10 +32,10 @@ public class ApostaService {
             throw new RuntimeException("Numeros invalidos");
         }
         if(surpresinha){
-          numeros = geraNumeros();
+          numeros = sorteioService.geraNumeros();
         }
-
-        apostaRepository.criarAposta(apostador.getID(), listToString(numeros));
+        Sorteio sorteioAberto = sorteioService.getSorteioAberto();
+        apostaRepository.criarAposta(apostador.getID(),sorteioAberto.getID(),listToString(numeros));
     }
 
     private boolean numerosInvalidos(List<Integer> entrada) {
@@ -45,19 +46,7 @@ public class ApostaService {
         return false;
     }
 
-    private List<Integer> geraNumeros() {
-        Random random = new Random();
-        List<Integer> numeros =  new ArrayList<>();
-        for(int i=0; i<5; i++){
-            int valor = random.nextInt(50)+1;
-            if(numeros.contains(valor)){
-                i--;
-            }else{
-                numeros.add(valor);
-            }
-        }
-        return numeros;
-    }
+
 
     private String listToString(List<Integer> numeros){
         return numeros.stream().map(String::valueOf).collect(Collectors.joining(","));

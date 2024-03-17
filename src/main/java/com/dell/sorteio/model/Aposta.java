@@ -11,17 +11,21 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table( name = "Aposta" )
+@Table( name = "aposta" )
 @EqualsAndHashCode
 public class Aposta {
     @Id
     Integer ID;
-    String valoresApostados;
+    String numeros;
     @ManyToOne
+    @JoinColumn(name = "sorteio_id")
+    Sorteio sorteio;
+    @ManyToOne
+    @JoinColumn(name = "apostador_id")
     Apostador apostador;
 
     public Aposta(List<Integer> valoresApostados, Apostador apostador){
-        this.valoresApostados = valoresApostados.stream()
+        this.numeros = valoresApostados.stream()
                 .map(String::valueOf)
                 .collect(Collectors.joining(","));
         this.apostador = apostador;

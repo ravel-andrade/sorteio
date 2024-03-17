@@ -17,7 +17,11 @@ public interface ApostaRepository extends JpaRepository<Aposta, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "Insert into Aposta(apostadorId, numeros) values(:apostadorId, :numeros)", nativeQuery = true)
+    @Query(value = "Insert into aposta(apostador_id, sorteio_id, numeros) values(:apostadorId, :sorteioId, :numeros)", nativeQuery = true)
     void criarAposta(@Param("apostadorId") Integer apostadorId,
+                              @Param("sorteioId") Integer sorteioId,
                               @Param("numeros") String numeros);
+
+    @Query(value = "select * from aposta where sorteio_id = :sorteioId", nativeQuery = true)
+    List<Aposta> buscaApostasPorSorteioId(@Param("sorteioId") Integer sorteioId);
 }

@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table( name = "Apostador" )
+@Table( name = "apostador" )
 @EqualsAndHashCode
 public class Apostador {
     @Id

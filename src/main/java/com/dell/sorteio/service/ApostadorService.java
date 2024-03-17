@@ -12,13 +12,14 @@ public class ApostadorService {
     ApostadorRepository repository;
     public Apostador getPorNomeECPF(String nome, String cpf) {
         Apostador apostador = repository.getPorCPF(cpf);
-        if(!apostador.getNome().equals(nome)){
+        if(apostador == null || !apostador.getNome().equals(nome)){
             return null;
         }
         return apostador;
     }
 
     public Apostador cadastraApostador(Apostador apostadorEntrada) {
-        return repository.save(apostadorEntrada);
+        repository.cadastraApostador(apostadorEntrada.getNome(), apostadorEntrada.getCpf());
+        return repository.getPorCPF(apostadorEntrada.getCpf());
     }
 }
