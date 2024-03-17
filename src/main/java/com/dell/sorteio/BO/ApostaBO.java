@@ -18,6 +18,7 @@ public class ApostaBO {
 
     public ApostaBO(Apostador apostador, String numeros) {
         this.apostador = apostador;
+        this.numeros = new ArrayList<>();
         Arrays.stream(numeros.split(",")).forEach( numero ->{
             this.numeros.add(Integer.parseInt(numero));
         });
