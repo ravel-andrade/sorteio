@@ -12,8 +12,6 @@ import java.util.List;
 
 @Repository
 public interface ApostaRepository extends JpaRepository<Aposta, Long> {
-    @Query(value = "SELECT id FROM aposta", nativeQuery = true)
-    List<Integer> buscaApostas();
 
     @Modifying
     @Transactional
@@ -24,4 +22,7 @@ public interface ApostaRepository extends JpaRepository<Aposta, Long> {
 
     @Query(value = "select * from aposta where sorteio_id = :sorteioId", nativeQuery = true)
     List<Aposta> buscaApostasPorSorteioId(@Param("sorteioId") Integer sorteioId);
+
+    @Query(value = "select * from aposta", nativeQuery = true)
+    List<Aposta> buscaApostas();
 }

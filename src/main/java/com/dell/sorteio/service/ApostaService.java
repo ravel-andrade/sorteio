@@ -19,7 +19,17 @@ public class ApostaService {
     SorteioService sorteioService;
     ApostadorService apostadorService;
 
+    public List<Aposta> getApostasSorteioAberto() {
+        if(!sorteioService.existeSorteioAberto()){
+            throw new RuntimeException("Não existe sorteio aberto a apostas");
+        }
+        Sorteio sorteioAberto = sorteioService.getSorteioAberto();
+        return apostaRepository.buscaApostasPorSorteioId(sorteioAberto.getID());
+    }
 
+    public List<Aposta> getApostas() {
+        return apostaRepository.buscaApostas();
+    }
     public void apostar(List<Integer> numeros, Boolean surpresinha, Apostador apostadorEntrada) {
         Apostador apostador= apostadorService.getPorNomeECPF(apostadorEntrada.getNome(), apostadorEntrada.getCpf());
         if(apostador == null){

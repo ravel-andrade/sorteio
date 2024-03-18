@@ -20,7 +20,7 @@ public class SorteioController {
 
     SorteioService service;
 
-    @PostMapping(path ="/abre", consumes = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(path ="/abre")
     public ResponseEntity abreSorteio(@RequestParam("nome") String nome) {
         if(nome.isEmpty()){
             //exception

@@ -1,16 +1,16 @@
 package com.dell.sorteio.controller;
 
 import com.dell.sorteio.dto.ApostaDTO;
+import com.dell.sorteio.model.Aposta;
 import com.dell.sorteio.model.Apostador;
 import com.dell.sorteio.service.ApostaService;
 import com.dell.sorteio.utils.ToModel;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -31,5 +31,17 @@ public class ApostaController {
     public ResponseEntity fechaAposta() {
         service.fechaAposta();
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(path="sorteio-aberto")
+    public ResponseEntity<List<Aposta>> apostaSorteioAtual() {
+        List<Aposta> apostas = service.getApostasSorteioAberto();
+        return ResponseEntity.ok(apostas);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Aposta>> todasApostas() {
+        List<Aposta> apostas = service.getApostas();
+        return ResponseEntity.ok(apostas);
     }
 }

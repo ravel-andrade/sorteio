@@ -44,6 +44,13 @@ public class SorteioService {
         return true;
     }
 
+    public boolean existeSorteioAberto() {
+        if(repository.getSorteioAberto() ==null){
+            return false;
+        }
+        return true;
+    }
+
     public Sorteio getSorteioAberto(){
         return repository.getSorteioAberto();
     }
