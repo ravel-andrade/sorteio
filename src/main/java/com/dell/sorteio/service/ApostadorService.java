@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class ApostadorService {
@@ -21,5 +23,11 @@ public class ApostadorService {
     public Apostador cadastraApostador(Apostador apostadorEntrada) {
         repository.cadastraApostador(apostadorEntrada.getNome(), apostadorEntrada.getCpf());
         return repository.getPorCPF(apostadorEntrada.getCpf());
+    }
+
+    public void premiar(List<Apostador> vencedores) {
+        vencedores.forEach(vencedor ->{
+            repository.adicionaSaldo(vencedor.getSaldo()+10000.0, vencedor.getID());
+        });
     }
 }

@@ -18,6 +18,7 @@ import java.util.*;
 public class SorteioService {
     SorteioRepository repository;
     ApostaRepository apostaRepository;
+    ApostadorService apostadorService;
     public void abreSorteio(String nome){
         Sorteio sorteio = repository.getSorteioAberto();
 
@@ -72,11 +73,24 @@ public class SorteioService {
             List<Apostador> vencedores = buscaVencedores(valoresSorteados, apostas);
             resultado.setNumRodadas(i+1);
             if(!vencedores.isEmpty()){
+                apostadorService.premiar(vencedores);
                 resultado.setVencedores(vencedores);
+                resultado.setNumerosSorteados(todosValoresSorteados);
+                return resultado;
             }
         }
-        resultado.setNumerosSorteados(todosValoresSorteados);
+
         return resultado;
+    }
+
+    private List<Integer> geraNumerosFake() {
+        List<Integer> a = new ArrayList<>();
+        a.add(1);
+        a.add(2);
+        a.add(3);
+        a.add(4);
+        a.add(5);
+        return a;
     }
 
     private Map<Integer, Integer> geraFrequencia(List<ApostaBO> apostas) {
@@ -93,16 +107,6 @@ public class SorteioService {
 
         });
         return frequencia;
-    }
-
-    private List<Integer> geraNumerosFake() {
-        List<Integer> a = new ArrayList<>();
-        a.add(1);
-        a.add(2);
-        a.add(3);
-        a.add(4);
-        a.add(5);
-        return a;
     }
 
     private List<Apostador> buscaVencedores(List<Integer> valoresSorteados, List<ApostaBO> apostas) {

@@ -1,18 +1,11 @@
 package com.dell.sorteio.controller;
 
-import com.dell.sorteio.BO.SorteioBO;
-import com.dell.sorteio.dto.ApostaDTO;
 import com.dell.sorteio.dto.Resultado;
-import com.dell.sorteio.model.Apostador;
-import com.dell.sorteio.service.ApostaService;
+import com.dell.sorteio.service.ApostadorService;
 import com.dell.sorteio.service.SorteioService;
-import com.dell.sorteio.utils.ToModel;
 import lombok.AllArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -20,6 +13,7 @@ import java.util.List;
 public class SorteioController {
 
     SorteioService service;
+    ApostadorService apostadorService;
 
     @PostMapping(path ="/abre")
     public ResponseEntity abreSorteio(@RequestParam("nome") String nome) {

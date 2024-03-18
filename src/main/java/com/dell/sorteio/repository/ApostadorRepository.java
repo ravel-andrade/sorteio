@@ -17,4 +17,9 @@ public interface ApostadorRepository extends JpaRepository<Apostador, Long> {
     @Transactional
     @Query(value = "INSERT INTO apostador(nome, cpf) values(:nome, :cpf)", nativeQuery = true)
     public void cadastraApostador(@Param("nome") String nome, @Param("cpf") String cpf);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE apostador set saldo = :saldo where ID = :id", nativeQuery = true)
+    public void adicionaSaldo(@Param("saldo") Double saldo, @Param("id") int id);
 }

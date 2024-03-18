@@ -17,9 +17,11 @@ public class Apostador {
     Integer ID;
     String nome;
     String cpf;
+    Double saldo;
 
     public Apostador(String nome, String cpf) {
         this.nome = nome;
         this.cpf = cpf;
+        this.saldo = 0.0;
     }
 }
