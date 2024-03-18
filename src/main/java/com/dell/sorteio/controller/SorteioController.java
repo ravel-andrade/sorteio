@@ -2,6 +2,7 @@ package com.dell.sorteio.controller;
 
 import com.dell.sorteio.BO.SorteioBO;
 import com.dell.sorteio.dto.ApostaDTO;
+import com.dell.sorteio.dto.Resultado;
 import com.dell.sorteio.model.Apostador;
 import com.dell.sorteio.service.ApostaService;
 import com.dell.sorteio.service.SorteioService;
@@ -36,9 +37,9 @@ public class SorteioController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Apostador>> sortear() {
-        List<Apostador> sorteio = service.sortear();
+    public ResponseEntity<Resultado> sortear() {
+        Resultado resultado = service.sortear();
         service.fechaSorteio();
-        return ResponseEntity.ok(sorteio);
+        return ResponseEntity.ok(resultado);
     }
 }

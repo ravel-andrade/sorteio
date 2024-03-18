@@ -1,6 +1,8 @@
 package com.dell.sorteio.service;
 
 import com.dell.sorteio.BO.ApostaBO;
+import com.dell.sorteio.dto.ApostadorDTO;
+import com.dell.sorteio.dto.Resultado;
 import com.dell.sorteio.model.Aposta;
 import com.dell.sorteio.model.Apostador;
 import com.dell.sorteio.model.Sorteio;
@@ -9,10 +11,7 @@ import com.dell.sorteio.repository.SorteioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -55,22 +54,45 @@ public class SorteioService {
         return repository.getSorteioAberto();
     }
 
-    public List<Apostador> sortear() {
+    public Resultado sortear() {
         Sorteio sorteio = repository.getSorteioAberto();
         if(repository.getSorteioAberto() ==null){
             throw new RuntimeException("Não existe aposta aberta");
         }
         List<Aposta> apostasBanco = apostaRepository.buscaApostasPorSorteioId(sorteio.getID());
         List<ApostaBO> apostas = ApostaBO.convertFromEntity(apostasBanco);
-        for(int i = 0; i<50; i++){
-            List<Integer> valoresSorteados = geraNumerosFake();
-            List<Apostador> vencedores = buscaVencedores(valoresSorteados, apostas);
-            if(!vencedores.isEmpty()){
-                return vencedores;
-            }
-            }
 
-        return Collections.emptyList();
+        Resultado resultado = new Resultado();
+        List<String> todosValoresSorteados = new ArrayList<>();
+        resultado.setNumApostas(apostas.size());
+        resultado.setFrequenciaAposta(geraFrequencia(apostas));
+        for(int i = 0; i<25; i++){
+            List<Integer> valoresSorteados = geraNumeros();
+            todosValoresSorteados.add(valoresSorteados.toString());
+            List<Apostador> vencedores = buscaVencedores(valoresSorteados, apostas);
+            resultado.setNumRodadas(i+1);
+            if(!vencedores.isEmpty()){
+                resultado.setVencedores(vencedores);
+            }
+        }
+        resultado.setNumerosSorteados(todosValoresSorteados);
+        return resultado;
+    }
+
+    private Map<Integer, Integer> geraFrequencia(List<ApostaBO> apostas) {
+        Map<Integer, Integer> frequencia = new HashMap<>();
+        apostas.forEach(aposta -> {
+            aposta.getNumeros().forEach(numero -> {
+                if(!frequencia.containsKey(numero)){
+                    frequencia.put(numero, 1);
+                }
+                else{
+                    frequencia.put(numero, frequencia.get(numero)+1);
+                }
+            });
+
+        });
+        return frequencia;
     }
 
     private List<Integer> geraNumerosFake() {
