@@ -25,8 +25,8 @@ public class ApostaService {
         if(apostador == null){
             apostador = apostadorService.cadastraApostador(apostadorEntrada);
         }
-        if(!sorteioService.existeSorteioAberto()){
-            throw new RuntimeException("Não existe sorteio aberto");
+        if(!sorteioService.existeSorteioAbertoApostas()){
+            throw new RuntimeException("Não existe sorteio aberto a apostas");
         }
         if(numerosInvalidos(numeros)){
             throw new RuntimeException("Numeros invalidos");
@@ -36,6 +36,10 @@ public class ApostaService {
         }
         Sorteio sorteioAberto = sorteioService.getSorteioAberto();
         apostaRepository.criarAposta(apostador.getID(),sorteioAberto.getID(),listToString(numeros));
+    }
+
+    public void fechaAposta(){
+        sorteioService.fechaAposta();
     }
 
     private boolean numerosInvalidos(List<Integer> entrada) {

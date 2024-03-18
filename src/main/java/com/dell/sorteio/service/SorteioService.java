@@ -23,7 +23,7 @@ public class SorteioService {
         Sorteio sorteio = repository.getSorteioAberto();
 
         if(sorteio != null){
-            throw new RuntimeException("Numeros invalidos");
+            throw new RuntimeException("Já existe sorteio aberto");
         }
 
         repository.abreSorteio(nome);
@@ -33,8 +33,12 @@ public class SorteioService {
         repository.fechaSorteio();
     }
 
-    public boolean existeSorteioAberto() {
-        if(repository.getSorteioAberto() ==null){
+    public void fechaAposta(){
+        repository.fechaAposta();
+    }
+
+    public boolean existeSorteioAbertoApostas() {
+        if(repository.getSorteioApostasAberto() ==null){
             return false;
         }
         return true;

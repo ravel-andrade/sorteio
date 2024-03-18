@@ -19,12 +19,19 @@ public interface SorteioRepository extends JpaRepository<Sorteio, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO sorteio(nome, aberto) values(':nome', true)", nativeQuery = true)
+    @Query(value = "INSERT INTO sorteio(nome, aberto, aberto_aposta) values(:nome, true, true)", nativeQuery = true)
     public void abreSorteio(@Param("nome") String nome);
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE sorteio set aberto= false where aberto = true", nativeQuery = true)
+    @Query(value = "UPDATE sorteio set aberto= false, aberto_aposta = false where aberto = true", nativeQuery = true)
     public void fechaSorteio();
 
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE sorteio set aberto_aposta= false where aberto_aposta = true", nativeQuery = true)
+    public void fechaAposta();
+
+    @Query(value = "SELECT * FROM sorteio where aberto = true and aberto_aposta = true", nativeQuery = true)
+    public Sorteio getSorteioApostasAberto();
 }

@@ -38,6 +38,7 @@ public class SorteioController {
     @GetMapping
     public ResponseEntity<List<Apostador>> sortear() {
         List<Apostador> sorteio = service.sortear();
+        service.fechaSorteio();
         return ResponseEntity.ok(sorteio);
     }
 }

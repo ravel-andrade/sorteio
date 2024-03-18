@@ -26,4 +26,10 @@ public class ApostaController {
 
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping(path ="/fecha")
+    public ResponseEntity fechaAposta() {
+        service.fechaAposta();
+        return ResponseEntity.ok().build();
+    }
 }
