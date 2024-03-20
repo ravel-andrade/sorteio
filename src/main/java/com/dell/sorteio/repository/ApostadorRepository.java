@@ -8,10 +8,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ApostadorRepository extends JpaRepository<Apostador, Long> {
     @Query(value = "Select * from apostador a where cpf=:cpf",nativeQuery = true)
     public Apostador getPorCPF(@Param("cpf") String cpf);
+
+    @Query(value = "Select * from apostador ORDER BY saldo desc",nativeQuery = true)
+    public List<Apostador> getApostadores();
 
     @Modifying
     @Transactional

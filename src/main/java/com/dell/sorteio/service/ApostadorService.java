@@ -25,6 +25,10 @@ public class ApostadorService {
         return repository.getPorCPF(apostadorEntrada.getCpf());
     }
 
+    public List<Apostador> getApostadores(){
+        return repository.getApostadores();
+    }
+
     public void premiar(List<Apostador> vencedores) {
         vencedores.forEach(vencedor ->{
             repository.adicionaSaldo(vencedor.getSaldo()+10000.0, vencedor.getID());
