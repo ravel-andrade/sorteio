@@ -21,7 +21,7 @@ public class ApostaService {
 
     public List<Aposta> getApostasSorteioAberto() {
         if(!sorteioService.existeSorteioAberto()){
-            throw new RuntimeException("Não existe sorteio aberto a apostas");
+            return Collections.emptyList();
         }
         Sorteio sorteioAberto = sorteioService.getSorteioAberto();
         return apostaRepository.buscaApostasPorSorteioId(sorteioAberto.getID());

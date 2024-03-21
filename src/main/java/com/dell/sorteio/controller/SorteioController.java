@@ -43,7 +43,6 @@ public class SorteioController {
     @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Resultado> sortear() {
         Resultado resultado = service.sortear();
-        service.fechaSorteio();
         return ResponseEntity.ok(resultado);
     }
 }
