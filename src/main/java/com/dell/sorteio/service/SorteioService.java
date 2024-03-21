@@ -68,7 +68,7 @@ public class SorteioService {
         resultado.setNumApostas(apostas.size());
         resultado.setFrequenciaAposta(geraFrequencia(apostas));
         for(int i = 0; i<25; i++){
-            List<Integer> valoresSorteados = geraNumerosFake();
+            List<Integer> valoresSorteados = geraNumeros();
             todosValoresSorteados.add(valoresSorteados.toString());
             List<Apostador> vencedores = buscaVencedores(valoresSorteados, apostas);
             resultado.setNumRodadas(i+1);
